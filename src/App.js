@@ -3,30 +3,30 @@ import "./App.css";
 import {v4 as uuidv4} from 'uuid';
 import {
   Form,
-  FormText,
   FormGroup,
   Label,
   Button,
-  Col,
   Input,
 } from "reactstrap";
 
 function App() {
-  const [name, setName] = useState('Alex')
+  const [name, setName] = useState('')
   const [token, setToken] = useState(null);
   const [email, setEmail] = useState("t@t.com");
   const [password, setPassword] = useState("123");
-  const [fieldsEmpty, setFieldsEmpty] =useState(false)
+  const [fieldsEmpty, setFieldsEmpty] =useState(false);
+  const [notFound, setNotFound] = useState(false)
 
   useEffect(() => {
-    let token = sessionStorage.getItem("token", "new token");
-
+    let token = sessionStorage.getItem("token");
+    let name= sessionStorage.getItem('name')
     if (token) {
-      console.log("session contains token");
+     setToken(token)
+     setName(name)
     }
   },[]);
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     const nameValue = e.target.name.value;
     const emailValue = e.target.email.value;
@@ -37,7 +37,14 @@ function App() {
       if(emailValue===email && pwdValue===password){
 // const token=emailValue+pwdValue //t@t.com123
 const token= uuidv4();
-console.log(token)
+sessionStorage.setItem('token',token)
+setToken(token);
+setName(nameValue)
+      } else {
+setNotFound(true)
+setTimeout(()=>{
+  setNotFound(false)
+},2000)
       }
     } else {
 setFieldsEmpty(true)
@@ -52,17 +59,12 @@ setTimeout(()=>{
     setToken(null);
   };
 
-  sessionStorage.setItem("token", "asdfdsff");
-  setTimeout(() => {
-    sessionStorage.clear();
-  }, 2000);
-
   return (
     <div className="App">
       {token ? (
         <div className="container">
           <p>Dashboard</p>
-          <p>Dear Name, welcome to your profile!</p>
+          <p>Dear {name}, welcome to your profile!</p>
           <Button onClick={handleLogout}>Logout</Button>
         </div>
       ) : (
@@ -70,7 +72,10 @@ setTimeout(()=>{
           {
             fieldsEmpty ? <div className="error">Please fill the fields first!</div> : null
           }
-          <Form inline onSubmit={handleSubmit}>
+            {
+            notFound ? <div className="error">User is not found in the system!</div> : null
+          }
+          <Form inline onSubmit={handleFormSubmit}>
             <FormGroup floating>
               <Input
                 id="exampleName"
