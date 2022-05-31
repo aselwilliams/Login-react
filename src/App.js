@@ -11,9 +11,11 @@ import {
 } from "reactstrap";
 
 function App() {
+  const [name, setName] = useState('Alex')
   const [token, setToken] = useState(null);
   const [email, setEmail] = useState("t@t.com");
   const [password, setPassword] = useState("123");
+  const [fieldsEmpty, setFieldsEmpty] =useState(false)
 
   useEffect(() => {
     let token = sessionStorage.getItem("token", "new token");
@@ -21,7 +23,7 @@ function App() {
     if (token) {
       console.log("session contains token");
     }
-  });
+  },[]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,6 +31,15 @@ function App() {
     const emailValue = e.target.email.value;
     const pwdValue = e.target.password.value;
     console.log(nameValue, emailValue, pwdValue);
+
+    if(nameValue!=='' && emailValue!=='' && pwdValue!==''){
+      console.log('auth')
+    } else {
+setFieldsEmpty(true)
+setTimeout(()=>{
+  setFieldsEmpty(false)
+},2000)
+    }
   };
 
   const handleLogout = () => {
@@ -43,6 +54,9 @@ function App() {
 
   return (
     <div className="App">
+      {
+        fieldsEmpty ? <div className="error">Please fill the fields first!</div> : null
+      }
       {token ? (
         <div className="container">
           <p>Dashboard</p>
