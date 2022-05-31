@@ -1,9 +1,12 @@
 import {useState, useEffect} from 'react'
 import './App.css';
+import {Form, FormText, FormGroup,Label,Button,Col, Input} from 'reactstrap';
 
 function App() {
   return (
     <div className="App">
+      <div className="container">
+
        <Form inline>
     <FormGroup floating>
       <Input
@@ -33,6 +36,7 @@ function App() {
       Submit
     </Button>
   </Form>
+    </div>
     </div>
   );
 }
