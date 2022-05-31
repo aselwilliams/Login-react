@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import {v4 as uuidv4} from 'uuid';
-import Dashboard from './components/Dashboard'
-import {
-  Form,
-  FormGroup,
-  Label,
-  Button,
-  Input,
-} from "reactstrap";
+import Dashboard from './components/Dashboard';
+import LoginPage from "./components/LoginPage";
+
 
 function App() {
   const [name, setName] = useState('')
@@ -73,36 +68,7 @@ setTimeout(()=>{
             {
             notFound ? <div className="error">User is not found in the system!</div> : null
           }
-          <Form inline onSubmit={handleFormSubmit}>
-            <FormGroup floating>
-              <Input
-                id="exampleName"
-                name="name"
-                placeholder="Name"
-                type="text"
-              />
-              <Label for="exampleName">Name</Label>
-            </FormGroup>{" "}
-            <FormGroup floating>
-              <Input
-                id="exampleEmail"
-                name="email"
-                placeholder="Email"
-                type="email"
-              />
-              <Label for="exampleEmail">Email</Label>
-            </FormGroup>
-            <FormGroup floating>
-              <Input
-                id="examplePassword"
-                name="password"
-                placeholder="Password"
-                type="password"
-              />
-              <Label for="examplePassword">Password</Label>
-            </FormGroup>{" "}
-            <Button>Login</Button>
-          </Form>
+         <LoginPage handleFormSubmit={handleFormSubmit} />
         </div>
       )}
     </div>
