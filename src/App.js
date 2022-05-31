@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import {v4 as uuidv4} from 'uuid';
+import Dashboard from './components/Dashboard'
 import {
   Form,
   FormGroup,
@@ -38,6 +39,7 @@ function App() {
 // const token=emailValue+pwdValue //t@t.com123
 const token= uuidv4();
 sessionStorage.setItem('token',token)
+sessionStorage.setItem('name',name)
 setToken(token);
 setName(nameValue)
       } else {
@@ -62,11 +64,7 @@ setTimeout(()=>{
   return (
     <div className="App">
       {token ? (
-        <div className="container">
-          <p>Dashboard</p>
-          <p>Dear {name}, welcome to your profile!</p>
-          <Button onClick={handleLogout}>Logout</Button>
-        </div>
+      <Dashboard name={name} handleLogout={handleLogout} />
       ) : (
         <div className="container">
           {
