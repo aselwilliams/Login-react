@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import {v4 as uuidv4} from 'uuid';
 import {
   Form,
   FormText,
@@ -33,7 +34,11 @@ function App() {
     console.log(nameValue, emailValue, pwdValue);
 
     if(nameValue!=='' && emailValue!=='' && pwdValue!==''){
-      console.log('auth')
+      if(emailValue===email && pwdValue===password){
+// const token=emailValue+pwdValue //t@t.com123
+const token= uuidv4();
+console.log(token)
+      }
     } else {
 setFieldsEmpty(true)
 setTimeout(()=>{
@@ -54,9 +59,6 @@ setTimeout(()=>{
 
   return (
     <div className="App">
-      {
-        fieldsEmpty ? <div className="error">Please fill the fields first!</div> : null
-      }
       {token ? (
         <div className="container">
           <p>Dashboard</p>
@@ -65,6 +67,9 @@ setTimeout(()=>{
         </div>
       ) : (
         <div className="container">
+          {
+            fieldsEmpty ? <div className="error">Please fill the fields first!</div> : null
+          }
           <Form inline onSubmit={handleSubmit}>
             <FormGroup floating>
               <Input
