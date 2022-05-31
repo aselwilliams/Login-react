@@ -3,10 +3,36 @@ import './App.css';
 import {Form, FormText, FormGroup,Label,Button,Col, Input} from 'reactstrap';
 
 function App() {
+const [token, setToken]=useState(null)
+const [email, setEmail]=useState('t@t.com')
+const [password,setPassword]=useState('123')
+
+useEffect(()=>{
+  let token=sessionStorage.getItem('token','new token')
+
+  if(token){
+    console.log('session contains token')
+  }
+})
+
   const handleSubmit=(e)=>{
 e.preventDefault();
-
+const nameValue=e.target.name.value;
+const emailValue=e.target.email.value;
+const pwdValue=e.target.password.value;
+console.log(nameValue,emailValue, pwdValue)
   }
+
+  const handleLogout=()=>{
+    sessionStorage.clear();
+    setToken(null)
+  }
+
+  sessionStorage.setItem('token', 'asdfdsff')
+  setTimeout(()=>{
+    sessionStorage.clear()
+  },2000);
+
   return (
     <div className="App">
       <div className="container">
@@ -55,7 +81,7 @@ e.preventDefault();
     <div className="container">
       <p>Dashboard</p>
       <p>Dear Name, welcome to your profile!</p>
-      <Button>Logout</Button>
+      <Button onClick={handleLogout}>Logout</Button>
     </div>
     </div>
   );
