@@ -4,7 +4,6 @@ import {v4 as uuidv4} from 'uuid';
 import Dashboard from './components/Dashboard';
 import LoginPage from "./components/LoginPage";
 
-
 function App() {
   const [name, setName] = useState('')
   const [token, setToken] = useState(null);
@@ -56,20 +55,23 @@ setTimeout(()=>{
     setToken(null);
   };
 
+  const dashProps= {
+    name: name,
+    handleLogout: handleLogout,
+  }
+
+  const loginProps= {
+    handleFormSubmit: handleFormSubmit,
+    fieldsEmpty: fieldsEmpty,
+    notFound: notFound,
+  }
   return (
     <div className="App">
       {token ? (
-      <Dashboard name={name} handleLogout={handleLogout} />
+      <Dashboard {...dashProps} />
       ) : (
-        <div className="container">
-          {
-            fieldsEmpty ? <div className="error">Please fill the fields first!</div> : null
-          }
-            {
-            notFound ? <div className="error">User is not found in the system!</div> : null
-          }
-         <LoginPage handleFormSubmit={handleFormSubmit} />
-        </div>
+     
+      <LoginPage {...loginProps} />
       )}
     </div>
   );

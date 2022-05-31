@@ -7,8 +7,16 @@ import {
     Input,
   } from "reactstrap";
 
- const LoginPage = ({handleFormSubmit}) => {
+ const LoginPage = ({handleFormSubmit , fieldsEmpty, notFound}) => {
   return (
+    <div className="container">
+    {
+      fieldsEmpty ? <div className="error">Please fill the fields first!</div> : null
+    }
+      {
+      notFound ? <div className="error">User is not found in the system!</div> : null
+    }
+
     <Form inline onSubmit={handleFormSubmit}>
     <FormGroup floating>
       <Input
@@ -39,6 +47,7 @@ import {
     </FormGroup>{" "}
     <Button>Login</Button>
   </Form>
+  </div>
   )
 }
 export default LoginPage
